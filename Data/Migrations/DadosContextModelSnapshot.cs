@@ -18,7 +18,7 @@ namespace Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("CRUD_Smartphone_Marca.Domain.Models.MarcaModel", b =>
+            modelBuilder.Entity("CRUD_Smartphone_Marca.Domain.Models.MarcaEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

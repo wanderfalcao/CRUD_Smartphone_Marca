@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUD_Smartphone_Marca.InversionOfControl", "CRUD_Smartphone_Marca.InversionOfControl\CRUD_Smartphone_Marca.InversionOfControl.csproj", "{F135303D-F3C7-4F9C-9D11-800DF5E73BFB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUD_Smartphone_Marca.Crosscutting.Identity", "CRUD_Smartphone_Marca.Crosscutting.Identity\CRUD_Smartphone_Marca.Crosscutting.Identity.csproj", "{E7F8729A-0D66-4F8E-A7BB-011EE00EF4DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{F135303D-F3C7-4F9C-9D11-800DF5E73BFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F135303D-F3C7-4F9C-9D11-800DF5E73BFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F135303D-F3C7-4F9C-9D11-800DF5E73BFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7F8729A-0D66-4F8E-A7BB-011EE00EF4DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7F8729A-0D66-4F8E-A7BB-011EE00EF4DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7F8729A-0D66-4F8E-A7BB-011EE00EF4DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7F8729A-0D66-4F8E-A7BB-011EE00EF4DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{E1D9DBF9-D88A-4D17-AFC3-51D1819D0ACC} = {7A56FD96-7110-4F39-B5CD-BC380BA9B102}
 		{78F7B44A-157F-4AAA-A815-72AD1FD599EB} = {3953D607-B26A-4BEC-AD93-01ACA382DF0A}
 		{F135303D-F3C7-4F9C-9D11-800DF5E73BFB} = {23A4A1FD-E3B1-4281-866E-DDA2CA19230E}
+		{E7F8729A-0D66-4F8E-A7BB-011EE00EF4DA} = {23A4A1FD-E3B1-4281-866E-DDA2CA19230E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1E2EEC49-4F85-439F-B143-5C857D5A430C}

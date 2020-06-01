@@ -32,6 +32,7 @@ namespace CRUD_Smartphone_Marca
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddRazorPages();
 
             DependencyInjection.Register(services, Configuration);
         }
@@ -42,6 +43,7 @@ namespace CRUD_Smartphone_Marca
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
             else
             {
@@ -54,6 +56,7 @@ namespace CRUD_Smartphone_Marca
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -61,6 +64,7 @@ namespace CRUD_Smartphone_Marca
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Marca}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

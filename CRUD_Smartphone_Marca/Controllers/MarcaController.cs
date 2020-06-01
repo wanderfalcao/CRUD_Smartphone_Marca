@@ -10,9 +10,11 @@ using CRUD_Smartphone_Marca.Domain.Models;
 using CRUD_Smartphone_Marca.Data.Context;
 using CRUD_Smartphone_Marca.Model.Interfaces.Services;
 using CRUD_Smartphone_Marca.Model.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CRUD_Smartphone_Marca.Controllers
 {
+    [Authorize]
     public class MarcaController : Controller
     {
         private readonly IMarcaService _MarcaService;
