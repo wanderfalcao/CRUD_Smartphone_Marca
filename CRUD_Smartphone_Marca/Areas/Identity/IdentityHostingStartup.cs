@@ -1,5 +1,5 @@
 ﻿using System;
-using CRUD_Smartphone_Marca.MVC.Areas.Identity.Data;
+using CRUD_Smartphone_Marca.Identity.Crosscutting;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 
-namespace CRUD_Smartphone_Marca.MVC.Areas.Identity.Data
+namespace CRUD_Smartphone_Marca.Identity.Crosscutting
 {
     public class LoginContext : IdentityDbContext<IdentityUser>
     {

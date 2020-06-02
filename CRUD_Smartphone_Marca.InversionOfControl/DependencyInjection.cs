@@ -16,7 +16,7 @@ namespace CRUD_Smartphone_Marca.InversionOfControl
 {
     public static class DependencyInjection
     {
-        public static void Register(
+        public static void RegisterInjections(
             IServiceCollection services,
             IConfiguration configuration)
         {

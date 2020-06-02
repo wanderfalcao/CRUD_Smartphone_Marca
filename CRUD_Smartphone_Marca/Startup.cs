@@ -34,7 +34,13 @@ namespace CRUD_Smartphone_Marca
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
 
-            DependencyInjection.Register(services, Configuration);
+
+            //services.RegisterInjections(Configuration);
+            //services.RegisterConfigurations(Configuration);
+            //services.RegisterIdentity(Configuration);
+
+            services.AddAuthorization(
+                options => options.AddPolicy("Admin", policy => policy.RequireClaim("AdminClaim")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
