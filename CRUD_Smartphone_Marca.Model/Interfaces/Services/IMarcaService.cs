@@ -8,8 +8,8 @@ namespace CRUD_Smartphone_Marca.Model.Interfaces.Services
     {
         Task<IEnumerable<MarcaEntity>> GetAllAsync();
         Task<MarcaEntity> GetByIdAsync(int id);
-        Task InsertAsync(MarcaEntity updatedEntity);
-        Task UpdateAsync(MarcaEntity insertedEntity);
+        Task InsertAsync(MarcaEntity insertedEntity);
+        Task UpdateAsync(MarcaEntity updatedEntity);
         Task<bool> CheckNomeAsync(string nome, int id = -1);
         Task DeleteAsync(int id);
     }

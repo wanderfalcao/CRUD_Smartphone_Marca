@@ -1,21 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore;
-using CRUD_Smartphone_Marca.Data;
-using CRUD_Smartphone_Marca.Data.Context;
-using CRUD_Smartphone_Marca.Model.Interfaces.Repositories;
-using CRUD_Smartphone_Marca.Model.Interfaces.Services;
-using Data.Repositories;
-using CRUD_Smartphone_Marca.Service.Services;
 using CRUD_Smartphone_Marca.InversionOfControl;
+using CRUD_Smartphone_Marca.MVC.Extensions;
+using CRUD_Smartphone_Marca.Identity.Crosscutting;
 
 namespace CRUD_Smartphone_Marca
 {
@@ -34,10 +24,11 @@ namespace CRUD_Smartphone_Marca
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
 
+            //DependencyInjection.RegisterInjections(services, Configuration);
 
-            //services.RegisterInjections(Configuration);
-            //services.RegisterConfigurations(Configuration);
-            //services.RegisterIdentity(Configuration);
+            services.RegisterInjections(Configuration);
+            services.RegisterConfigurations(Configuration);
+            services.RegisterIdentity(Configuration);
 
             services.AddAuthorization(
                 options => options.AddPolicy("Admin", policy => policy.RequireClaim("AdminClaim")));
