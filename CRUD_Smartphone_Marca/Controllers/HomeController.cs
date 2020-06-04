@@ -23,6 +23,23 @@ namespace CRUD_Smartphone_Marca.Controllers
         {
             _logger = logger;
             _testOption = testOption;
+
+            //if (testOption.CurrentValue.ExampleString == "Asd")
+            //{
+
+            //}
+            //else if (testOption.CurrentValue.ExampleString == "qwe")
+            //{
+
+            //}
+            //else if (testOption.CurrentValue.ExampleString == "zxc")
+            //{
+
+            //}
+            //else
+            //{
+            //    throw new ArgumentException("Opção inválida", nameof(testOption.CurrentValue.ExampleString));
+            //}
         }
 
         public IActionResult Index()

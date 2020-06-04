@@ -1,5 +1,6 @@
 ﻿using CRUD_Smartphone_Marca.Data.Context;
 using CRUD_Smartphone_Marca.Domain.Models;
+using CRUD_Smartphone_Marca.Model.Exceptions;
 using CRUD_Smartphone_Marca.Model.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -43,16 +44,30 @@ namespace Data.Repositories
             return await _context.MarcaModel.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task InsertAsync(MarcaEntity updatedEntity)
+        public async Task InsertAsync(MarcaEntity insertedEntity)
         {
-            _context.Add(updatedEntity);
+            _context.Add(insertedEntity);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(MarcaEntity insertedEntity)
+        public async Task UpdateAsync(MarcaEntity updatedEntity)
         {
-            _context.Update(insertedEntity);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Update(updatedEntity);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (await GetByIdAsync(updatedEntity.Id) == null)
+                {
+                    throw new RepositoryException("Marca não encontrada!");
+                }
+                else
+                {
+                    throw;
+                }
+            }
         }
     }
 }

@@ -7,11 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUD_Smartphone_Marca.MVC",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-Presentation", "01-Presentation", "{A5C078CD-F2AD-483E-A3E1-E9330C31ACC4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02-Domain", "02-Domain", "{7A56FD96-7110-4F39-B5CD-BC380BA9B102}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03-Domain", "03-Domain", "{7A56FD96-7110-4F39-B5CD-BC380BA9B102}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03-Infrastructure", "03-Infrastructure", "{3953D607-B26A-4BEC-AD93-01ACA382DF0A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04-Infrastructure", "04-Infrastructure", "{3953D607-B26A-4BEC-AD93-01ACA382DF0A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04-Crosscutting", "04-Crosscutting", "{23A4A1FD-E3B1-4281-866E-DDA2CA19230E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05-Crosscutting", "05-Crosscutting", "{23A4A1FD-E3B1-4281-866E-DDA2CA19230E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUD_Smartphone_Marca.Model", "CRUD_Smartphone_Marca.Model\CRUD_Smartphone_Marca.Model.csproj", "{CF4403DB-7512-4E5E-A2CE-4E72044F9DBC}"
 EndProject
@@ -21,7 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUD_Smartphone_Marca.InversionOfControl", "CRUD_Smartphone_Marca.InversionOfControl\CRUD_Smartphone_Marca.InversionOfControl.csproj", "{F135303D-F3C7-4F9C-9D11-800DF5E73BFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUD_Smartphone_Marca.Identity.Crosscutting", "CRUD_Smartphone_Marca.Identity.Crosscutting\CRUD_Smartphone_Marca.Identity.Crosscutting.csproj", "{F558E9AE-214E-452E-8E1B-E75981B949FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUD_Smartphone_Marca.Identity.Crosscutting", "CRUD_Smartphone_Marca.Identity.Crosscutting\CRUD_Smartphone_Marca.Identity.Crosscutting.csproj", "{F558E9AE-214E-452E-8E1B-E75981B949FF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02-Application", "02-Application", "{B87AECCC-357E-4507-BFE9-155DAF3E127B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUD_Smartphone_Marca.WebAPI", "CRUD_Smartphone_Marca.WebAPI\CRUD_Smartphone_Marca.WebAPI.csproj", "{CA045352-A3FB-4975-9FC5-E5C1097DDDE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +57,10 @@ Global
 		{F558E9AE-214E-452E-8E1B-E75981B949FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F558E9AE-214E-452E-8E1B-E75981B949FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F558E9AE-214E-452E-8E1B-E75981B949FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA045352-A3FB-4975-9FC5-E5C1097DDDE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA045352-A3FB-4975-9FC5-E5C1097DDDE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA045352-A3FB-4975-9FC5-E5C1097DDDE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA045352-A3FB-4975-9FC5-E5C1097DDDE3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +72,7 @@ Global
 		{78F7B44A-157F-4AAA-A815-72AD1FD599EB} = {3953D607-B26A-4BEC-AD93-01ACA382DF0A}
 		{F135303D-F3C7-4F9C-9D11-800DF5E73BFB} = {23A4A1FD-E3B1-4281-866E-DDA2CA19230E}
 		{F558E9AE-214E-452E-8E1B-E75981B949FF} = {23A4A1FD-E3B1-4281-866E-DDA2CA19230E}
+		{CA045352-A3FB-4975-9FC5-E5C1097DDDE3} = {B87AECCC-357E-4507-BFE9-155DAF3E127B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1E2EEC49-4F85-439F-B143-5C857D5A430C}
