@@ -24,8 +24,8 @@ namespace CRUD_Smartphone_Marca
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
 
-            //DependencyInjection.RegisterInjections(services, Configuration);
-
+            DependencyInjection.RegisterInjections(services, Configuration);
+            services.RegisterHttpClients(Configuration);
             services.RegisterInjections(Configuration);
             services.RegisterConfigurations(Configuration);
             services.RegisterIdentity(Configuration);

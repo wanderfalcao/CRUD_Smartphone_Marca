@@ -25,6 +25,8 @@ namespace CRUD_Smartphone_Marca.InversionOfControl
 
             services.AddScoped<IMarcaRepository, MarcaRepository>();
             services.AddScoped<IMarcaService, MarcaService>();
+            services.AddScoped<ISmartphoneRepository, SmartphoneRepository>();
+            services.AddScoped<ISmartphoneSevice, SmartphoneService>();
         }
     }
 }

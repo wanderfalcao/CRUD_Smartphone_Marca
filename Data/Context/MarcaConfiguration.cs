@@ -11,9 +11,7 @@ namespace Data.Context
     {
         public void Configure(EntityTypeBuilder<MarcaEntity> builder)
         {
-            builder
-                .HasIndex(x => x.Nome)
-                .IsUnique();
+
         }
     }
 }
