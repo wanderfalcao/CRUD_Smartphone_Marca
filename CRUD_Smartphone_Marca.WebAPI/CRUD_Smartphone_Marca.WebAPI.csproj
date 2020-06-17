@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CRUD_Smartphone_Marca.InversionOfControl\CRUD_Smartphone_Marca.InversionOfControl.csproj" />
+    <ProjectReference Include="..\CRUD_Smartphone_Marca.Model\CRUD_Smartphone_Marca.Model.csproj" />
+  </ItemGroup>
+
+
+</Project>

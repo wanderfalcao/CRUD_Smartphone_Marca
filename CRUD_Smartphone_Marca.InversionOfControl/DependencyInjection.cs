@@ -16,8 +16,8 @@ namespace CRUD_Smartphone_Marca.InversionOfControl
 {
     public static class DependencyInjection
     {
-        public static void Register(
-            IServiceCollection services,
+        public static void RegisterInjections(
+            this IServiceCollection services,
             IConfiguration configuration)
         {
             services.AddDbContext<DadosContext>(options =>
@@ -25,6 +25,8 @@ namespace CRUD_Smartphone_Marca.InversionOfControl
 
             services.AddScoped<IMarcaRepository, MarcaRepository>();
             services.AddScoped<IMarcaService, MarcaService>();
+            services.AddScoped<ISmartphoneRepository, SmartphoneRepository>();
+            services.AddScoped<ISmartphoneSevice, SmartphoneService>();
         }
     }
 }

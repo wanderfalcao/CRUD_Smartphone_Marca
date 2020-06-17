@@ -3,29 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using CRUD_Smartphone_Marca.Models;
 using CRUD_Smartphone_Marca.Domain.Models;
-using CRUD_Smartphone_Marca.Data.Context;
 using CRUD_Smartphone_Marca.Model.Interfaces.Services;
 using CRUD_Smartphone_Marca.Model.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CRUD_Smartphone_Marca.Controllers
 {
+    [Authorize]
     public class MarcaController : Controller
     {
-        private readonly IMarcaService _MarcaService;
+        private readonly IMarcaService _marcaService;
 
-        public MarcaController(IMarcaService IMarcaService)
+        public MarcaController(IMarcaService marcaService)
         {
-            _MarcaService = IMarcaService;
+            _marcaService = marcaService;
         }
 
         // GET: Marca
         public async Task<IActionResult> Index()
         {
-            return View(await _MarcaService.GetAllAsync());
+            return View(await _marcaService.GetAllAsync());
         }
 
         // GET: Marca/Details/5
@@ -36,7 +35,7 @@ namespace CRUD_Smartphone_Marca.Controllers
                 return NotFound();
             }
 
-            var marcaModel = await _MarcaService.GetByIdAsync(id.Value);
+            var marcaModel = await _marcaService.GetByIdAsync(id.Value);
             if (marcaModel == null)
             {
                 return NotFound();
@@ -56,13 +55,14 @@ namespace CRUD_Smartphone_Marca.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,Nome,Pais,qtdSmartphone")] MarcaEntity marcaModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    await _MarcaService.InsertAsync(marcaModel);
+                    await _marcaService.InsertAsync(marcaModel);
                     return RedirectToAction(nameof(Index));
                 }
                 catch (EntityValidationException e)
@@ -81,7 +81,7 @@ namespace CRUD_Smartphone_Marca.Controllers
                 return NotFound();
             }
 
-            var marcaModel = await _MarcaService.GetByIdAsync(id.Value);
+            var marcaModel = await _marcaService.GetByIdAsync(id.Value);
             if (marcaModel == null)
             {
                 return NotFound();
@@ -105,11 +105,11 @@ namespace CRUD_Smartphone_Marca.Controllers
             {
                 try
                 {
-                    await _MarcaService.UpdateAsync(marcaModel);
+                    await _marcaService.UpdateAsync(marcaModel);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (await _MarcaService.GetByIdAsync(id) == null)
+                    if (await _marcaService.GetByIdAsync(id) == null)
                     {
                         return NotFound();
                     }
@@ -131,7 +131,7 @@ namespace CRUD_Smartphone_Marca.Controllers
                 return NotFound();
             }
 
-            var marcaModel = await _MarcaService.GetByIdAsync(id.Value);
+            var marcaModel = await _marcaService.GetByIdAsync(id.Value);
             if (marcaModel == null)
             {
                 return NotFound();
@@ -145,13 +145,13 @@ namespace CRUD_Smartphone_Marca.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _MarcaService.DeleteAsync(id);
+            await _marcaService.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
         [AcceptVerbs("GET", "POST")]
         public async Task<IActionResult> CheckNome(string nome, int id)
         {
-            if (await _MarcaService.CheckNomeAsync(nome, id))
+            if (await _marcaService.CheckNomeAsync(nome, id))
             {
                 return Json($"Nome: {nome} já existe!");
             }
