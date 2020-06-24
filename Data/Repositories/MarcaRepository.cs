@@ -41,7 +41,8 @@ namespace Data.Repositories
 
         public async Task<MarcaEntity> GetByIdAsync(int id)
         {
-            return await _context.MarcaModel.FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.MarcaModel.Include(x => x.Smartphone)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task InsertAsync(MarcaEntity insertedEntity)

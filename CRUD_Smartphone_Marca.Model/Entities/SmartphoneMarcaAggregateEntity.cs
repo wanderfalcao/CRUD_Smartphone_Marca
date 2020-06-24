@@ -7,7 +7,7 @@ namespace CRUD_Smartphone_Marca.Model.Entities
 {
     public class SmartphoneMarcaAggregateEntity
     {
-        public MarcaEntity marcaEntity { get; set; }
-        public SmartphoneEntity smartphoneEntity { get; set; }
+        public MarcaEntity MarcaEntity { get; set; }
+        public SmartphoneEntity SmartphoneEntity { get; set; }
     }
 }

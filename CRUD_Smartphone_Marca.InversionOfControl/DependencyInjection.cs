@@ -22,11 +22,14 @@ namespace CRUD_Smartphone_Marca.InversionOfControl
         {
             services.AddDbContext<DadosContext>(options =>
                     options.UseSqlServer(configuration.GetConnectionString("DadosContext")));
-
-            services.AddScoped<IMarcaRepository, MarcaRepository>();
-            services.AddScoped<IMarcaService, MarcaService>();
-            services.AddScoped<ISmartphoneRepository, SmartphoneRepository>();
+            
             services.AddScoped<ISmartphoneSevice, SmartphoneService>();
+            services.AddScoped<ISmartphoneRepository, SmartphoneRepository>();
+            services.AddScoped<IMarcaService, MarcaService>();
+            services.AddScoped<IMarcaRepository, MarcaRepository>();
+            
+            
+            
         }
     }
 }

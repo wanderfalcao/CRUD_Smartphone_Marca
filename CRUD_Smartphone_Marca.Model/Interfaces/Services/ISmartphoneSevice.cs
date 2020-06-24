@@ -10,7 +10,7 @@ namespace CRUD_Smartphone_Marca.Model.Interfaces.Services
     {
         Task<IEnumerable<SmartphoneEntity>> GetAllAsync();
         Task<SmartphoneEntity> GetByIdAsync(int id);
-        Task InsertAsync(SmartphoneEntity insertedEntity);
+        Task InsertAsync(SmartphoneMarcaAggregateEntity smartphoneMarcaAggregateEntity);
         Task UpdateAsync(SmartphoneEntity updatedEntity);
         Task DeleteAsync(int id);
     }

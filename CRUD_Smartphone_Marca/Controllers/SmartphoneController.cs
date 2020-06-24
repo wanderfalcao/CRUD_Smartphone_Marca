@@ -2,14 +2,11 @@
 using CRUD_Smartphone_Marca.Model.Exceptions;
 using CRUD_Smartphone_Marca.Model.Interfaces.Services;
 using CRUD_Smartphone_Marca.MVC.HttpServices;
+using CRUD_Smartphone_Marca.MVC.ViewModels;
 using CRUD_Smartphone_Marca.Service.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CRUD_Smartphone_Marca.MVC.Controllers
@@ -56,9 +53,10 @@ namespace CRUD_Smartphone_Marca.MVC.Controllers
         }
 
         // GET: Marca/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var smartphoneViewModel = new SmartphoneMarcaAggregateViewModel(await _marcaService.GetAllAsync());
+            return View(smartphoneViewModel);
         }
 
         // POST: Marca/Create
@@ -67,13 +65,14 @@ namespace CRUD_Smartphone_Marca.MVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Policy = "Admin")]
-        public async Task<IActionResult> Create(SmartphoneEntity smartphoneModel)
+        public async Task<IActionResult> Create(SmartphoneMarcaAggregateViewModel smartphoneMarcaAggregateViewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    await _smartphoneService.InsertAsync(smartphoneModel);
+                    var smartphoneMarcaAggregateEntity = smartphoneMarcaAggregateViewModel.ToAggregateEntity();
+                    await _smartphoneService.InsertAsync(smartphoneMarcaAggregateEntity);
                     return RedirectToAction(nameof(Index));
                 }
                 catch (EntityValidationException e)
@@ -81,7 +80,7 @@ namespace CRUD_Smartphone_Marca.MVC.Controllers
                     ModelState.AddModelError(e.PropertyName, e.Message);
                 }
             }
-            return View(smartphoneModel);
+            return View(smartphoneMarcaAggregateViewModel);
         }
 
         // GET: Marca/Edit/5
@@ -97,7 +96,10 @@ namespace CRUD_Smartphone_Marca.MVC.Controllers
             {
                 return NotFound();
             }
-            return View(smartphoneModel);
+
+            var smartphoneViewModel = new SmartphoneViewModel(smartphoneModel, await _marcaService.GetAllAsync());
+
+            return View(smartphoneViewModel);
         }
 
         // POST: Marca/Edit/5
@@ -105,19 +107,38 @@ namespace CRUD_Smartphone_Marca.MVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, SmartphoneEntity smartphoneModel)
+        public async Task<IActionResult> Edit(int id, SmartphoneEntity smartphoneEntity)
         {
-            if (id != smartphoneModel.Id)
+            if (id != smartphoneEntity.Id)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                await _smartphoneService.UpdateAsync(smartphoneModel);                
+                try
+                {
+                    await _smartphoneService.UpdateAsync(smartphoneEntity);
+                }
+                catch(EntityValidationException e)
+                {
+                    ModelState.AddModelError(e.PropertyName, e.Message);
+                    return View(new SmartphoneViewModel(smartphoneEntity));
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (await _smartphoneService.GetByIdAsync(id) == null)
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
-            return View(smartphoneModel);
+            return View(new SmartphoneViewModel(smartphoneEntity));
         }
 
         // GET: Marca/Delete/5

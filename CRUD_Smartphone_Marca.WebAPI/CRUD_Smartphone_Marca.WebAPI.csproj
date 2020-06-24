@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CRUD_Smartphone_Marca.Identity.Crosscutting\CRUD_Smartphone_Marca.Identity.Crosscutting.csproj" />
     <ProjectReference Include="..\CRUD_Smartphone_Marca.InversionOfControl\CRUD_Smartphone_Marca.InversionOfControl.csproj" />
     <ProjectReference Include="..\CRUD_Smartphone_Marca.Model\CRUD_Smartphone_Marca.Model.csproj" />
   </ItemGroup>

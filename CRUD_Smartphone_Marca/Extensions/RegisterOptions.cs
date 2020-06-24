@@ -15,16 +15,16 @@ namespace CRUD_Smartphone_Marca.MVC.Extensions
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            //services.Configure<TestOption>(configuration.GetSection("TestOption"));
+            services.Configure<DadosHttpOptions>(configuration.GetSection(nameof(DadosHttpOptions)));
 
-            services.AddOptions<TestOption>()
-                .Configure(option =>
-                {
-                    option.ExampleString = configuration.GetValue<string>("TestOption:ExampleString");
-                    option.ExampleBool = configuration.GetValue<bool>("TestOption:ExampleBool");
-                    option.ExampleInt = configuration.GetValue<int>("TestOption:ExampleInt");
-                })
-                .Validate(x => x.Validate(), "Validação de ExampleString falhou");
+            //services.AddOptions<TestOption>()
+            //    .Configure(option =>
+            //    {
+            //        option.ExampleString = configuration.GetValue<string>("TestOption:ExampleString");
+            //        option.ExampleBool = configuration.GetValue<bool>("TestOption:ExampleBool");
+            //        option.ExampleInt = configuration.GetValue<int>("TestOption:ExampleInt");
+            //    })
+            //    .Validate(x => x.Validate(), "Validação de ExampleString falhou");
         }
     }
 }

@@ -21,14 +21,14 @@ namespace CRUD_Smartphone_Marca
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews().AddRazorRuntimeCompilation();
-            services.AddRazorPages();
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
+                .AddRazorRuntimeCompilation();
 
-            DependencyInjection.RegisterInjections(services, Configuration);
-            services.RegisterHttpClients(Configuration);
-            services.RegisterInjections(Configuration);
+
             services.RegisterConfigurations(Configuration);
-            services.RegisterIdentity(Configuration);
+            services.RegisterHttpClients(Configuration);
+            services.RegisterIdentityForMvc(Configuration);
 
             services.AddAuthorization(
                 options => options.AddPolicy("Admin", policy => policy.RequireClaim("AdminClaim")));
@@ -60,7 +60,7 @@ namespace CRUD_Smartphone_Marca
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Marca}/{action=Index}/{id?}");
+                    pattern: "{controller=Smartphone}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

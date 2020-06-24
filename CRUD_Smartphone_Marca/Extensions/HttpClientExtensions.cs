@@ -3,11 +3,6 @@ using CRUD_Smartphone_Marca.Model.Options;
 using CRUD_Smartphone_Marca.MVC.HttpServices;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CRUD_Smartphone_Marca.MVC.Extensions
 {
@@ -17,13 +12,13 @@ namespace CRUD_Smartphone_Marca.MVC.Extensions
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            var bibliotecaHttpOptionsSection = configuration.GetSection(nameof(DadosHttpOptions));
-            var bibliotecaHttpOptions = bibliotecaHttpOptionsSection.Get<DadosHttpOptions>();
+            var dadosHttpOptionsSection = configuration.GetSection(nameof(DadosHttpOptions));
+            var dadosHttpOptions = dadosHttpOptionsSection.Get<DadosHttpOptions>();
 
-            services.AddHttpClient(bibliotecaHttpOptions.Name, x => { x.BaseAddress = bibliotecaHttpOptions.ApiBaseUrl; });
+            services.AddHttpClient(dadosHttpOptions.Name, x => { x.BaseAddress = dadosHttpOptions.ApiBaseUrl; });
 
-            services.AddScoped<IMarcaService, MarcaHttpService>();
             services.AddScoped<ISmartphoneSevice, SmartphoneHttpService>();
+            services.AddScoped<IMarcaHttpService, MarcaHttpService>();            
         }
     }
 }

@@ -8,23 +8,36 @@ using CRUD_Smartphone_Marca.Domain.Models;
 using CRUD_Smartphone_Marca.Model.Interfaces.Services;
 using CRUD_Smartphone_Marca.Model.Exceptions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using CRUD_Smartphone_Marca.MVC.HttpServices;
+using System.Net;
 
 namespace CRUD_Smartphone_Marca.Controllers
 {
     [Authorize]
     public class MarcaController : Controller
     {
-        private readonly IMarcaService _marcaService;
+        private readonly IMarcaHttpService _marcaService;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        public MarcaController(IMarcaService marcaService)
+        public MarcaController(
+            IMarcaHttpService marcaService,
+            SignInManager<IdentityUser> signInManager)
         {
             _marcaService = marcaService;
+            _signInManager = signInManager;
         }
 
         // GET: Marca
         public async Task<IActionResult> Index()
         {
-            return View(await _marcaService.GetAllAsync());
+            var marcas = await _marcaService.GetAllAsync();
+
+            if(marcas == null)
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+            return View(marcas);
         }
 
         // GET: Marca/Details/5
@@ -33,6 +46,25 @@ namespace CRUD_Smartphone_Marca.Controllers
             if (id == null)
             {
                 return NotFound();
+            }
+
+            var httpResponseMessage = await _marcaService.GetByIdHttpAsync(id.Value);
+
+            if (!httpResponseMessage.IsSuccessStatusCode)
+            {
+                if (httpResponseMessage.StatusCode == HttpStatusCode.Forbidden)
+                {
+                    await _signInManager.SignOutAsync();
+                    return Redirect("/Identity/Account/Login");
+                }
+                else
+                {
+                    var message = await httpResponseMessage.Content.ReadAsStringAsync();
+                    ModelState.AddModelError(string.Empty, message);
+
+                    var marcas = await _marcaService.GetAllAsync();
+                    return View(nameof(Index), marcas);
+                }
             }
 
             var marcaModel = await _marcaService.GetByIdAsync(id.Value);
@@ -56,13 +88,13 @@ namespace CRUD_Smartphone_Marca.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Policy = "Admin")]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Pais,qtdSmartphone")] MarcaEntity marcaModel)
+        public async Task<IActionResult> Create(MarcaEntity marcaEntity)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    await _marcaService.InsertAsync(marcaModel);
+                    await _marcaService.InsertAsync(marcaEntity);
                     return RedirectToAction(nameof(Index));
                 }
                 catch (EntityValidationException e)
@@ -70,7 +102,7 @@ namespace CRUD_Smartphone_Marca.Controllers
                     ModelState.AddModelError(e.PropertyName, e.Message);
                 }
             }
-            return View(marcaModel);
+            return View(marcaEntity);
         }
 
         // GET: Marca/Edit/5
@@ -94,9 +126,9 @@ namespace CRUD_Smartphone_Marca.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Pais,qtdSmartphone")] MarcaEntity marcaModel)
+        public async Task<IActionResult> Edit(int id, MarcaEntity marcaEntity)
         {
-            if (id != marcaModel.Id)
+            if (id != marcaEntity.Id)
             {
                 return NotFound();
             }
@@ -105,7 +137,7 @@ namespace CRUD_Smartphone_Marca.Controllers
             {
                 try
                 {
-                    await _marcaService.UpdateAsync(marcaModel);
+                    await _marcaService.UpdateAsync(marcaEntity);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -120,7 +152,7 @@ namespace CRUD_Smartphone_Marca.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(marcaModel);
+            return View(marcaEntity);
         }
 
         // GET: Marca/Delete/5

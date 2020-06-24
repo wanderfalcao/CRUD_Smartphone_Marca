@@ -26,7 +26,7 @@ namespace CRUD_Smartphone_Marca.WebAPI.Controllers
         public async Task<ActionResult<IEnumerable<MarcaEntity>>> GetMarcaEntity()
         {
             var marca = await _marcaService.GetAllAsync();
-            return marca.ToList();
+            return Ok(marca.ToList());
         }
 
         [HttpGet("{id}")]
@@ -41,7 +41,7 @@ namespace CRUD_Smartphone_Marca.WebAPI.Controllers
 
             if (marcaEntity == null)
             {
-                return NotFound();
+                return NotFound("Mensagem de not found");
             }
 
             return marcaEntity;
@@ -59,11 +59,6 @@ namespace CRUD_Smartphone_Marca.WebAPI.Controllers
             {
                 await _marcaService.UpdateAsync(marcaEntity);
             }
-            catch (EntityValidationException e)
-            {
-                ModelState.AddModelError(e.PropertyName, e.Message);
-                return BadRequest(ModelState);
-            }
             catch (RepositoryException e)
             {
                 ModelState.AddModelError(string.Empty, e.Message);
@@ -79,19 +74,9 @@ namespace CRUD_Smartphone_Marca.WebAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            try
-            {
-                await _marcaService.InsertAsync(marcaEntity);
+            await _marcaService.InsertAsync(marcaEntity);
 
-                return CreatedAtAction(
-                    "GetMarcaEntity",
-                    new { id = marcaEntity.Id }, marcaEntity);
-            }
-            catch (EntityValidationException e)
-            {
-                ModelState.AddModelError(e.PropertyName, e.Message);
-                return BadRequest(ModelState);
-            }
+            return Ok(marcaEntity);
         }
 
         // DELETE: api/Marca/5
@@ -111,7 +96,7 @@ namespace CRUD_Smartphone_Marca.WebAPI.Controllers
 
             await _marcaService.DeleteAsync(id);
 
-            return marcaEntity;
+            return Ok(marcaEntity);
         }
 
         [HttpGet("CheckNome/{nome}/{id}")]

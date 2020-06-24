@@ -1,4 +1,5 @@
-﻿using CRUD_Smartphone_Marca.Model.Entities;
+﻿using CRUD_Smartphone_Marca.Domain.Models;
+using CRUD_Smartphone_Marca.Model.Entities;
 using CRUD_Smartphone_Marca.Model.Exceptions;
 using CRUD_Smartphone_Marca.Model.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -13,7 +14,6 @@ namespace CRUD_Smartphone_Marca.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class SmartphoneController : ControllerBase
     {
         private readonly ISmartphoneSevice _smartphoneService;
@@ -28,7 +28,7 @@ namespace CRUD_Smartphone_Marca.WebAPI.Controllers
         public async Task<ActionResult<IEnumerable<SmartphoneEntity>>> GetSmartphoneEntity()
         {
             var marca = await _smartphoneService.GetAllAsync();
-            return marca.ToList();
+            return Ok(marca.ToList());
         }
 
         [HttpGet("{id}")]
@@ -46,7 +46,7 @@ namespace CRUD_Smartphone_Marca.WebAPI.Controllers
                 return NotFound();
             }
 
-            return smartphoneEntity;
+            return Ok(smartphoneEntity);
         }
 
         [HttpPut("{id}")]
@@ -60,29 +60,31 @@ namespace CRUD_Smartphone_Marca.WebAPI.Controllers
             try
             {
                 await _smartphoneService.UpdateAsync(smartphoneEntity);
+                return Ok();
+            }
+            catch (EntityValidationException e)
+            {
+                ModelState.AddModelError(e.PropertyName, e.Message);
+                return BadRequest(ModelState);
             }
             catch (RepositoryException e)
             {
                 ModelState.AddModelError(string.Empty, e.Message);
                 return BadRequest(ModelState);
             }
-
-            return NoContent();
         }
 
         [HttpPost]
-        public async Task<ActionResult<SmartphoneEntity>> PostSmartphoneEntity(SmartphoneEntity smartphoneEntity)
+        public async Task<ActionResult<SmartphoneEntity>> PostSmartphoneEntity(SmartphoneMarcaAggregateEntity smartphoneMarcaAggregateEntity)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                await _smartphoneService.InsertAsync(smartphoneEntity);
+                await _smartphoneService.InsertAsync(smartphoneMarcaAggregateEntity);
 
-                return CreatedAtAction(
-                    "GetSmartphoneEntity",
-                    new { id = smartphoneEntity.Id }, smartphoneEntity);
+                return Ok(smartphoneMarcaAggregateEntity);
             }
             catch (EntityValidationException e)
             {
@@ -108,7 +110,7 @@ namespace CRUD_Smartphone_Marca.WebAPI.Controllers
 
             await _smartphoneService.DeleteAsync(id);
 
-            return smartphoneEntity;
+            return Ok(smartphoneEntity);
         }
 
     }

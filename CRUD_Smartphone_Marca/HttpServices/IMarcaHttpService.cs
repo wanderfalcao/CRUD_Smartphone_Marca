@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using CRUD_Smartphone_Marca.Model.Interfaces.Services;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CRUD_Smartphone_Marca.MVC.HttpServices
 {
-    public interface IMarcaHttpService
+    public interface IMarcaHttpService : IMarcaService
     {
         Task<HttpResponseMessage> GetByIdHttpAsync(int id);
     }

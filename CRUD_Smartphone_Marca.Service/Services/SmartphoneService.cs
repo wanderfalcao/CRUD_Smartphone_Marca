@@ -12,11 +12,14 @@ namespace CRUD_Smartphone_Marca.Service.Services
     public class SmartphoneService : ISmartphoneSevice
     {
         private readonly ISmartphoneRepository _smartphoneRepository;
+        private readonly IMarcaService _marcaService;
 
         public SmartphoneService(
-            ISmartphoneRepository marcaRepository)
+            ISmartphoneRepository smartphoneRepository,
+            IMarcaService marcaService)
         {
-            _smartphoneRepository = marcaRepository;
+            _smartphoneRepository = smartphoneRepository;
+            _marcaService = marcaService;
         }
 
         public async Task DeleteAsync(int id)
@@ -34,9 +37,17 @@ namespace CRUD_Smartphone_Marca.Service.Services
             return await _smartphoneRepository.GetByIdAsync(id);
         }
 
-        public async Task InsertAsync(SmartphoneEntity insertedEntity)
+        public async Task InsertAsync(SmartphoneMarcaAggregateEntity smartphoneMarcaAggregateEntity)
         {
-            await _smartphoneRepository.InsertAsync(insertedEntity);
+            if (!(smartphoneMarcaAggregateEntity.MarcaEntity is null) &&
+                !string.IsNullOrWhiteSpace(smartphoneMarcaAggregateEntity.MarcaEntity.Nome) &&
+                !string.IsNullOrWhiteSpace(smartphoneMarcaAggregateEntity.MarcaEntity.Pais))
+            {
+                await _marcaService.InsertAsync(smartphoneMarcaAggregateEntity.MarcaEntity);
+            }
+
+            smartphoneMarcaAggregateEntity.SmartphoneEntity.Marca = smartphoneMarcaAggregateEntity.MarcaEntity;
+            await _smartphoneRepository.InsertAsync(smartphoneMarcaAggregateEntity.SmartphoneEntity);
         }
 
         public async Task UpdateAsync(SmartphoneEntity updatedEntity)

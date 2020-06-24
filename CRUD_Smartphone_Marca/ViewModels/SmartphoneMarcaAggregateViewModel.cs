@@ -34,22 +34,49 @@ namespace CRUD_Smartphone_Marca.MVC.ViewModels
         [StringLength(30, ErrorMessage = "{0} deve ter entre {2} e {1} caracteres.", MinimumLength = 3)]
         public string NomeMarca { get; set; }
 
-        public int Pais { get; set; }
+        public String Pais { get; set; }
 
-        public string qtdSmartphone { get; set; }
-        public SmartphoneMarcaAggregateViewModel()
+        public int qtdSmartphone { get; set; }
+
+        public SmartphoneMarcaAggregateViewModel(){}
+
+        public SmartphoneMarcaAggregateViewModel(IEnumerable<MarcaEntity>marcas)
         {
+            Marcas = ToMarcaSelectListItem(marcas);
         }
 
-        //public SmartphoneMarcaAggregateViewModel( IEnumerable<MarcaEntity> marcas)
-        //{
-        //    marcas = ToMarcaSelectListItem(marcas);
-        //}
+        private static List<SelectListItem> ToMarcaSelectListItem(IEnumerable<MarcaEntity> marcas)
+        {
+            return marcas.Select(x => new SelectListItem
+            { Text = $"{x.Nome} {x.Pais}", Value = x.Id.ToString() }).ToList();
+        }
+        public SmartphoneMarcaAggregateEntity ToAggregateEntity()
+        {
+            var aggregateEntity = new SmartphoneMarcaAggregateEntity
+            {
+                SmartphoneEntity = new SmartphoneEntity
+                {
+                    Nome = NomeSmartphone,
+                    Modelo = Modelo,
+                    Lancamento = Lancamento,
+                    Valor = Valor,
+                    MarcaEntityId = MarcaEntityId ?? 0
+                }
+            };
 
-        //public IEnumerable<MarcaEntity> ToMarcaSelectListItem(IEnumerable<MarcaEntity> marcas)
-        //{
-        //    return marcas.Select(x => new SelectListItem
-        //        { Text = $"{x.Nome}", Value = x.Id.ToString() }).ToList();
-        //}
+            if (!string.IsNullOrWhiteSpace(Modelo) ||
+                string.IsNullOrWhiteSpace(NomeMarca))
+                return aggregateEntity;
+
+            aggregateEntity.MarcaEntity = new MarcaEntity
+            {
+                Nome = NomeMarca,
+                Pais = Pais,
+                qtdSmartphone = qtdSmartphone,
+                Id = MarcaEntityId ?? 0
+            };
+
+            return aggregateEntity;
+        }
     }
 }
