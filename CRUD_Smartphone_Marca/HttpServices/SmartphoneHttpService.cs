@@ -113,13 +113,5 @@ namespace CRUD_Smartphone_Marca.MVC.HttpServices
                 await _signInManager.SignOutAsync();
             }
         }
-
-
-        //public async Task<bool> CheckNomeAsync(string nome, int id = -1)
-        //{
-        //    var pathWithId = $"{_dadosHttpOptions.CurrentValue.SmartphonePath}/CheckNome/{nome}/{id}";
-        //    var result = await _httpClient.GetStringAsync(pathWithId);
-        //    return bool.Parse(result);
-        //}
     }
 }

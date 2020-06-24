@@ -64,7 +64,7 @@ namespace CRUD_Smartphone_Marca.MVC.ViewModels
                 }
             };
 
-            if (!string.IsNullOrWhiteSpace(Modelo) ||
+            if (string.IsNullOrWhiteSpace(Modelo) ||
                 string.IsNullOrWhiteSpace(NomeMarca))
                 return aggregateEntity;
 
